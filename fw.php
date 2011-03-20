@@ -5,8 +5,7 @@
 require("config.php");
 
 $curl = curl_init(); 
-//221.179.190.48 api.t.sina.com.cn
-curl_setopt($curl, CURLOPT_URL,"http://221.179.190.48/account/verify_credentials.xml?source=".SWBAPPKEY);        
+curl_setopt($curl, CURLOPT_URL,"http://api.t.sina.com.cn/account/verify_credentials.xml?source=".SWBAPPKEY);        
  curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);     
 curl_setopt($curl,CURLOPT_USERPWD, SWBUSERNAME.":".SWBPASSWORD); 
 $data = curl_exec($curl);        
@@ -23,7 +22,6 @@ echo 'Currently I got  '.$n.' followers:
 $u_id = $d["id"];
 
 $curl = curl_init(); 
-//221.179.190.48 api.t.sina.com.cn
 curl_setopt($curl, CURLOPT_URL,"api.t.sina.com.cn/statuses/followers.xml?source=".SWBAPPKEY."&user_id=".$u_id."&count=205");  
  curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);     
 curl_setopt($curl,CURLOPT_USERPWD, SWBUSERNAME.":".SWBPASSWORD); 
