@@ -1,0 +1,11 @@
+<?
+define('SWBUSERNAME', 'bla@sina.com');
+define('SWBPASSWORD', 'bla');
+define('SWBAPPKEY', '1234567890');
+define('OWNERKEY', 'bla');
+define('SWBHASHTAG','#bla#');
+define('RINTERVAL',50);
+
+$fwstr='Time to sleep~';
+$gmstr='Time to wake up and study English~';
+?>
