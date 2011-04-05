@@ -1,18 +1,19 @@
 <?php
-require("config.php");
-require("weibo.class.php");
-$w=new weibo(SWBAPPKEY);
-$w->setUser(SWBUSERNAME,SWBPASSWORD);
+require("prepare.php");
 
 
 date_default_timezone_set('Asia/Chongqing');
 $h=date('H');
-echo $h.' <br>';
 if($h<7||$h>22)//gmt+8 23:~6:
 {echo ' sleeping~';
 $m=date('i');
 if(($h=='23')&&($m=='00'))
 {$w->update($fwstr);}//time to sleep
+
+if(($h=='5')&&($m=='00'))
+{$tmp=implode(file('timed.txt'));
+$w->update($tmp);}//huanghl
+
 }
 else 
 {
@@ -25,38 +26,42 @@ $seedstr =split(" ",$seedarray,5);
 $seed =$seedstr[0]*10000; 
 srand($seed); 
 
+do{
 $a=file("wordlist.txt") ;
-$wd= $a[rand(0, count($a)-1)];
-
-//$wd='levy';
+$wd=$a[rand(0, count($a)-1)];
 
 $xml=simplexml_load_file('http://dict.cn/ws.php?utf8=true&q='.$wd);
-if (($xml->sent[0]->orig=='')&&($xml->sent[1]->orig=='')&&($xml->sent[1]->orig==''))
+}while($xml->key=='');
+
+$ct='';
+if(($xml->sent[0]->orig=='')&&($xml->sent[1]->orig=='')&&($xml->sent[1]->orig==''))
 {
-$sen=' ...';
 }
 else
 {
-$sen='';
-while($sen=='')
+do 
 {
-$sen=$xml->sent[rand(0,2)]->orig;
+$i=rand(0,3);
+$ct=$xml->sent[$i]->orig;
 }
-$sen='  "'.$sen.'"';
+while($ct=='');
+$ct=strip_tags($ct.' '.$xml->sent[$i]->trans);
 }
+
 if($xml->pron==''){$prn=' ';}
 else{$prn=' ['.$xml->pron.'] ';}
 
-$u=$xml->key.$prn.$xml->def.' '.$sen;
-$u=strip_tags($u);
+$u=strip_tags($xml->key.$prn.$xml->def);
 echo $wd.'  //updating: 
 '.'<br>'.$u.'<br>';
 
 $r=$w->update($u);
 print('
 ');
-echo $r;
+$uid=$r['id'];
+echo $uid;
 print_r($r);
+print_r($w->send_comment($uid,$ct));
 
 $fh=fopen("udl.txt","a");
 $u=$xml->key." \n";
