@@ -1,49 +1,36 @@
+<? header("Content- Type:text/html; charset=utf-8"); ?>
+<meta content="text/html; charset=utf-8">
 <html>
-<head><title>My followers</title></head>
+<head><title>My followers @ SinaWB</title></head>
 <body>
 <?
 require("config.php");
+echo 'My latest followers:
 
-$curl = curl_init(); 
-curl_setopt($curl, CURLOPT_URL,"http://api.t.sina.com.cn/account/verify_credentials.xml?source=".SWBAPPKEY);        
- curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);     
-curl_setopt($curl,CURLOPT_USERPWD, SWBUSERNAME.":".SWBPASSWORD); 
-$data = curl_exec($curl);        
-echo curl_error($curl);
-curl_close($curl); 
-//echo $data;
-$d=simplexml_load_string($data);
-//print_r($d);
-$n=$d->followers_count;
-echo 'Currently I got  '.$n.' followers:
 ';
-//if ($n==''){echo 'err';}
 
-$u_id = $d["id"];
+require("prepare.php");
+$d=$w->followers();
 
-$curl = curl_init(); 
-curl_setopt($curl, CURLOPT_URL,"api.t.sina.com.cn/statuses/followers.xml?source=".SWBAPPKEY."&user_id=".$u_id."&count=205");  
- curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);     
-curl_setopt($curl,CURLOPT_USERPWD, SWBUSERNAME.":".SWBPASSWORD); 
-$data2 = curl_exec($curl);        
-echo curl_error($curl);
-curl_close($curl); 
-//print($data);
-$d2=simplexml_load_string($data2);
-//print_r($d2);
-foreach($d2 as $follower){ 
 
+foreach($d as $follower){ 
+//print_r($follower);
 echo ' <br> <br>';
-print "<a href=\"http://t.sina.cn/{$follower->id}\">".$follower->name;
+print "<a href=\"http://t.sina.cn/{$follower['id']}\">".$follower['name'];
 
-if($follower->domain!='') print " / ".$follower->domain;
+if($follower['domain']!='') print " / ".$follower['domain'];
 print "</a>";
 
 echo "<br>";
 
-if($follower->description!='') print '( '.$follower->description.' )';
+if($follower['description']!='') print '( '.$follower['description'].' )';
 else print "--";
-echo '<br>'.$follower->status->text.' <br>'; 
+
+echo "<br>";
+
+print '  fi '.$follower['friends_count'].' / fr '.$follower['followers_count'];
+
+echo '<br>'.$follower['status']['text'].' <br>'; 
 
 }
 
