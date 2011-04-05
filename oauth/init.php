@@ -9,7 +9,7 @@ $o = new WeiboOAuth( SWBAPPKEY, SWBAPPSECRET );
 
 $keys = $o->getRequestToken();
 
-$callback = 'http://wordcard.tk/wbdemo/cbk.php';
+  $callback = 'http://yourdimain/oauth/cbk.php';// Please Modify this
 echo 'current callback url: '.$callback.' ; <br>';
 $aurl = $o->getAuthorizeURL( $keys['oauth_token'] ,false , $callback );
 
