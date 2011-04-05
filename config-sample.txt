@@ -2,6 +2,7 @@
 define('SWBUSERNAME', 'bla@sina.com');
 define('SWBPASSWORD', 'bla');
 define('SWBAPPKEY', '1234567890');
+define('SWBAPPSECRET', 'aaabbbcccdddeeefffggghhhiiijjjkk');
 define('OWNERKEY', 'bla');
 define('SWBHASHTAG','#bla#');
 define('RINTERVAL',50);
