@@ -23,4 +23,4 @@ fwrite($fh,"\n?>");
 fclose($fh);
 ?>
 seems okay.
-topen.php generated.
+token.php generated.
