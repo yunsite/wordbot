@@ -1,8 +1,5 @@
 <?
-require("config.php");
-require("weibo.class.php");
-$w=new weibo(SWBAPPKEY);
-$w->setUser(SWBUSERNAME,SWBPASSWORD);
+require("prepare.php");
 
 $tmf=file('rept.txt');
 $tm=$tmf[0];
@@ -44,7 +41,7 @@ $b= "lookup";
 $c=explode($b,$text); 
 if(count($c)> 1){
 //print('@'.$name." :".$text."&   ");
-print($data->id);
+print($id);
 //echo  $c[1];
 
 $xml=simplexml_load_file('http://dict.cn/ws.php?utf8=true&q='.$c[1]);
@@ -67,17 +64,18 @@ else
 {
 $u=$xml->key.' ['.$xml->pron.'] '.$xml->def;
 }
-$un=$data['user'];
+/*$un=$data['user'];
 $na=$un['name'];
-$u='@'.$na.' '.$u;
+$u='@'.$na.' '.$u;*/
 echo 'ud:'.$u;
-print_r($w->update($u));
+print_r($w->send_comment($id,$u,0));
 }
 
 }
 }
 
-print('mmi:'.$mmi);
+print(' mmi:'.$mmi);
+print(' time:'.time());
 if($mmi>$mi)
 {
 $f=fopen('repl.txt','w');
