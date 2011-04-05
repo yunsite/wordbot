@@ -1,9 +1,6 @@
 <?php
 
-require("config.php");
-require("weibo.class.php");
-$w=new weibo(SWBAPPKEY);
-$w->setUser(SWBUSERNAME,SWBPASSWORD);
+require("prepare.php");
 
 date_default_timezone_set('Asia/Chongqing');
 $h=date('H');
