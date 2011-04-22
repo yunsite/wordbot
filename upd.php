@@ -9,9 +9,9 @@ if($h<7||$h>22)//gmt+8 23:~6:
 $m=date('i');
 if(($h=='23')&&($m=='00'))
 {$w->update($fwstr);}//time to sleep
-
-if(($h=='5')&&($m=='00'))
-{$tmp=implode(file('timed.txt'));
+$wkd=date('N');
+if(($m=='00')&&(($h=='5'&&$wkd<6)||($h=='6'&&$wkd>5)))
+{$tmp=file_get_contents('timed.txt');
 $w->update($tmp);}//huanghl
 
 }
@@ -67,6 +67,11 @@ $fh=fopen("udl.txt","a");
 $u=$xml->key." \n";
 fwrite($fh,$u);
 fclose($fh);
+
+$fh2=fopen("udl_c.txt","a");
+$u='['.$xml->key.' '.$xml->def.']'." \n";
+fwrite($fh2,$u);
+fclose($fh2);
 
 }
 ?>
