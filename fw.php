@@ -41,8 +41,3 @@ echo '<br>'.$follower['status']['text'].' <br>';
 <br><a href="http://t.sina.com.cn/wordbot">Go follow me.</a><br>
 </body>
 
-<script language="javascript"
-type="text/javascript" src="http://
-js.users.51.la/4517641.js"></script>
-<noscript><img src="http://img.users.51.la/4517641.asp" width="0" height="0"></noscript>
-</html>
