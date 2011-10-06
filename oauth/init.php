@@ -12,13 +12,10 @@ $o = new WeiboOAuth( SWBAPPKEY, SWBAPPSECRET , $keys['oauth_token'],$keys['oauth
 
 $last_key = $o->getAccessToken(  $_REQUEST['oauth_verifier'] ) ;
 
-$lkot=$last_key['oauth_token'];
-$lkots=$last_key['oauth_token_secret'];
-
-$fh=fopen('token.php','w');
+$fh=fopen('token.php','w+');
 fwrite($fh,"<?\n");
-fwrite($fh,'define("SWBTOKEN","'.$lkot.'");'."\n");
-fwrite($fh,'define("SWBTOKENSECRET","'.$lkots.'");'."\n");
+fwrite($fh,'define("SWBTOKEN","'.$last_key['oauth_token'].'");'."\n");
+fwrite($fh,'define("SWBTOKENSECRET","'.$last_key['oauth_token_secret'].'");'."\n");
 fwrite($fh,"\n?>");
 fclose($fh);
 
@@ -34,9 +31,6 @@ $keys = $o->getRequestToken();
 $callback = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?iscallback=1';
 echo 'current callback url: '.$callback.' ; <br>';
 $aurl = $o->getAuthorizeURL( $keys['oauth_token'] ,false , $callback );
-
-//$_SESSION['keys'] = $keys;
-//print_r($keys);
 
 $fh=fopen('token','w+');
 fwrite($fh,serialize($keys));
